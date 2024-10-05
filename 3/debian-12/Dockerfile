@@ -45,6 +45,7 @@ RUN mkdir -p /tmp/bitnami/pkg/cache/ ; cd /tmp/bitnami/pkg/cache/ ; \
     done; \
     curl -SsLf "https://download.phpbb.com/pub/release/3.3/3.3.13/phpBB-3.3.13.zip" -O;\
     unzip phpBB-3.3.13.zip;\
+    rm phpBB-3.3.13.zip;\
     mv phpBB3/ /opt/bitnami/phpbb
 RUN apt-get update && apt-get upgrade -y && \
     apt-get clean && rm -rf /var/lib/apt/lists /var/cache/apt/archives
