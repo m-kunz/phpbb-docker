@@ -1,3 +1,5 @@
+This repository is a clone of the discontinued bitnami image. It just provides further updates, without changing anything major.
+
 # Bitnami package for phpBB
 
 ## What is phpBB?
@@ -10,7 +12,7 @@ Trademarks: This software listing is packaged by Bitnami. The respective tradema
 ## TL;DR
 
 ```console
-docker run --name phpbb bitnami/phpbb:latest
+docker run --name phpbb makunz/phpbb:latest
 ```
 
 **Warning**: This quick setup is only intended for development environments. You are encouraged to change the insecure default credentials and check out the available configuration options in the [Environment Variables](#environment-variables) section for a more secure deployment.
@@ -50,16 +52,16 @@ To run this application you need Docker Engine 1.10.0. Docker Compose is recomen
 
 ## Get this image
 
-The recommended way to get the Bitnami phpBB Docker Image is to pull the prebuilt image from the [Docker Hub Registry](https://hub.docker.com/r/bitnami/phpbb).
+The recommended way to get the Bitnami phpBB Docker Image is to pull the prebuilt image from the [Docker Hub Registry](https://hub.docker.com/r/makunz/phpbb).
 
 ```console
-docker pull bitnami/phpbb:latest
+docker pull makunz/phpbb:latest
 ```
 
 To use a specific version, you can pull a versioned tag. You can view the [list of available versions](https://hub.docker.com/r/bitnami/phpbb/tags/) in the Docker Hub Registry.
 
 ```console
-docker pull bitnami/phpbb:[TAG]
+docker pull makunz/phpbb:[TAG]
 ```
 
 If you wish, you can also build the image yourself by cloning the repository, changing to the directory containing the Dockerfile and executing the `docker build` command. Remember to replace the `APP`, `VERSION` and `OPERATING-SYSTEM` path placeholders in the example command below with the correct values.
@@ -108,7 +110,7 @@ docker run -d --name phpbb \
   --env PHPBB_DATABASE_NAME=bitnami_phpbb \
   --network phpbb-network \
   --volume phpbb_data:/bitnami/phpbb \
-  bitnami/phpbb:latest
+  makunz/phpbb:latest
 ```
 
 Access your application at `http://your-ip/`
@@ -116,7 +118,7 @@ Access your application at `http://your-ip/`
 ### Run the application using Docker Compose
 
 ```console
-curl -sSL https://raw.githubusercontent.com/bitnami/containers/main/bitnami/phpbb/docker-compose.yml > docker-compose.yml
+curl -sSL https://raw.githubusercontent.com/m-kunz/main/docker-compose.yml > docker-compose.yml
 docker-compose up -d
 ```
 
@@ -136,7 +138,7 @@ To avoid inadvertent removal of volumes, you can mount host directories as data 
 
 ### Mount host directories as data volumes with Docker Compose
 
-This requires a minor change to the [`docker-compose.yml`](https://github.com/bitnami/containers/blob/main/bitnami/phpbb/docker-compose.yml) file present in this repository:
+This requires a minor change to the [`docker-compose.yml`](https://github.com/m-kunz/phpbb-docker/blob/main/docker-compose.yml) file present in this repository:
 
 ```diff
    mariadb:
@@ -192,7 +194,7 @@ docker run -d --name phpbb \
   --env PHPBB_DATABASE_NAME=bitnami_phpbb \
   --network phpbb-network \
   --volume /path/to/phpbb-persistence:/bitnami/phpbb \
-  bitnami/phpbb:latest
+  makunz/phpbb:latest
 ```
 
 ## Configuration
@@ -246,7 +248,7 @@ docker run -d --name phpbb \
 
 When you start the phpBB image, you can adjust the configuration of the instance by passing one or more environment variables either on the docker-compose file or on the `docker run` command line. If you want to add a new environment variable:
 
-* For docker-compose add the variable name and value under the application section in the [`docker-compose.yml`](https://github.com/bitnami/containers/blob/main/bitnami/phpbb/docker-compose.yml) file present in this repository:
+* For docker-compose add the variable name and value under the application section in the [`docker-compose.yml`](https://github.com/m-kunz/phpbb-docker/blob/main/docker-compose.yml) file present in this repository:
 
 ```yaml
 phpbb:
@@ -263,14 +265,14 @@ phpbb:
     --env PHPBB_PASSWORD=my_password \
     --network phpbb-tier \
     --volume /path/to/phpbb-persistence:/bitnami \
-    bitnami/phpbb:latest
+    makunz/phpbb:latest
   ```
 
 ### Example
 
 This would be an example of SMTP configuration using a Gmail account:
 
-* Modify the [`docker-compose.yml`](https://github.com/bitnami/containers/blob/main/bitnami/phpbb/docker-compose.yml) file present in this repository:
+* Modify the [`docker-compose.yml`](https://github.com/m-kunz/phpbb-docker/blob/main/docker-compose.yml) file present in this repository:
 
 ```yaml
   phpbb:
@@ -298,7 +300,7 @@ This would be an example of SMTP configuration using a Gmail account:
     --env PHPBB_SMTP_PASSWORD=your_password \
     --network phpbb-tier \
     --volume /path/to/phpbb-persistence:/bitnami \
-    bitnami/phpbb:latest
+    makunz/phpbb:latest
   ```
 
 ## Logging
@@ -365,7 +367,7 @@ For the phpBB container:
    ...
 -  --volume /path/to/phpbb-persistence:/bitnami/phpbb \
 +  --volume /path/to/phpbb-backups/latest:/bitnami/phpbb \
-   bitnami/phpbb:latest
+   makunz/phpbb:latest
 ```
 
 ### Upgrade this image
@@ -375,7 +377,7 @@ Bitnami provides up-to-date versions of MariaDB and phpBB, including security pa
 #### Step 1: Get the updated image
 
 ```console
-docker pull bitnami/phpbb:latest
+docker pull makunz/phpbb:latest
 ```
 
 #### Step 2: Stop the running container
@@ -422,7 +424,7 @@ Before extending this image, please note there are certain configuration setting
 If your desired customizations cannot be covered using the methods mentioned above, extend the image. To do so, create your own image using a Dockerfile with the format below:
 
 ```Dockerfile
-FROM bitnami/phpbb
+FROM makunz/phpbb
 ## Put your customizations below
 ...
 ```
@@ -434,7 +436,7 @@ Here is an example of extending the image with the following modifications:
 * Modify the ports used by Apache
 
 ```Dockerfile
-FROM bitnami/phpbb
+FROM makunz/phpbb
 
 ## Change user to perform privileged actions
 USER 0
@@ -453,11 +455,11 @@ ENV APACHE_HTTPS_PORT_NUMBER=8143
 EXPOSE 8181 8143
 ```
 
-Based on the extended image, you can update the [`docker-compose.yml`](https://github.com/bitnami/containers/blob/main/bitnami/phpbb/docker-compose.yml) file present in this repository to add other features:
+Based on the extended image, you can update the [`docker-compose.yml`](https://github.com/m-kunz/phpbb-docker/blob/main/docker-compose.yml) file present in this repository to add other features:
 
 ```diff
    phpbb:
--    image: bitnami/phpbb:latest
+-    image: makunz/phpbb:latest
 +    build: .
      ports:
 -      - '80:8080'
