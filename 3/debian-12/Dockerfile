@@ -11,11 +11,11 @@ LABEL com.vmware.cp.artifact.flavor="sha256:c50c90cfd9d12b445b011e6ad529f1ad3dae
       org.opencontainers.image.description="Application packaged by Broadcom, Inc." \
       org.opencontainers.image.documentation="https://github.com/bitnami/containers/tree/main/bitnami/phpbb/README.md" \
       org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.ref.name="3.3.12-debian-12-r5" \
+      org.opencontainers.image.ref.name="3.3.14-debian-12-r5" \
       org.opencontainers.image.source="https://github.com/bitnami/containers/tree/main/bitnami/phpbb" \
       org.opencontainers.image.title="phpbb" \
       org.opencontainers.image.vendor="Broadcom, Inc." \
-      org.opencontainers.image.version="3.3.12"
+      org.opencontainers.image.version="3.3.14"
 
 ENV HOME="/" \
     OS_ARCH="${TARGETARCH:-amd64}" \
@@ -29,10 +29,10 @@ RUN install_packages unzip acl ca-certificates curl jq libaudit1 libbrotli1 libb
 RUN mkdir -p /tmp/bitnami/pkg/cache/ ; cd /tmp/bitnami/pkg/cache/ ; \
     COMPONENTS=( \
       "render-template-1.0.7-2-linux-${OS_ARCH}-debian-12" \
-      "php-8.3.12-0-linux-${OS_ARCH}-debian-12" \
+      "php-8.3.14-0-linux-${OS_ARCH}-debian-12" \
       "apache-2.4.62-0-linux-${OS_ARCH}-debian-12" \
       "mysql-client-10.11.9-0-linux-${OS_ARCH}-debian-12" \
-      "libphp-8.3.12-0-linux-${OS_ARCH}-debian-12" \
+      "libphp-8.3.14-0-linux-${OS_ARCH}-debian-12" \
     ) ; \
     for COMPONENT in "${COMPONENTS[@]}"; do \
       if [ ! -f "${COMPONENT}.tar.gz" ]; then \
@@ -43,9 +43,9 @@ RUN mkdir -p /tmp/bitnami/pkg/cache/ ; cd /tmp/bitnami/pkg/cache/ ; \
       tar -zxf "${COMPONENT}.tar.gz" -C /opt/bitnami --strip-components=2 --no-same-owner --wildcards '*/files' ; \
       rm -rf "${COMPONENT}".tar.gz{,.sha256} ; \
     done; \
-    curl -SsLf "https://download.phpbb.com/pub/release/3.3/3.3.13/phpBB-3.3.13.zip" -O;\
-    unzip phpBB-3.3.13.zip;\
-    rm phpBB-3.3.13.zip;\
+    curl -SsLf "https://download.phpbb.com/pub/release/3.3/3.3.14/phpBB-3.3.14.zip" -O;\
+    unzip phpBB-3.3.14.zip;\
+    rm phpBB-3.3.14.zip;\
     mv phpBB3/ /opt/bitnami/phpbb
 RUN apt-get update && apt-get upgrade -y && \
     apt-get clean && rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -60,7 +60,7 @@ RUN /opt/bitnami/scripts/apache-modphp/postunpack.sh
 RUN /opt/bitnami/scripts/phpbb/postunpack.sh
 ENV APACHE_HTTPS_PORT_NUMBER="" \
     APACHE_HTTP_PORT_NUMBER="" \
-    APP_VERSION="3.3.12" \
+    APP_VERSION="3.3.14" \
     BITNAMI_APP_NAME="phpbb" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/php/bin:/opt/bitnami/php/sbin:/opt/bitnami/apache/bin:/opt/bitnami/mysql/bin:$PATH"
 
